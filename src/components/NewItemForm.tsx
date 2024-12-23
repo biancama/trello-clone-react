@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useRef} from 'react';
 import {NewItemFormContainer, NewItemButton, NewItemInput} from '../styled';
 
 interface NewItemFormProps {
@@ -6,15 +6,13 @@ interface NewItemFormProps {
 }
 
 export const NewItemForm = ({onAdd}: NewItemFormProps) => {
-    const [text, setText] = useState('');
-
+    const inputRef = useRef<HTMLInputElement | null>(null);
     return (
         <NewItemFormContainer>
-            <NewItemInput
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-            />
-            <NewItemButton onClick={() => onAdd(text)}>Create</NewItemButton>
+            <NewItemInput ref={inputRef} />
+            <NewItemButton onClick={() => onAdd(inputRef.current!.value)}>
+                Create
+            </NewItemButton>
         </NewItemFormContainer>
     );
 };
